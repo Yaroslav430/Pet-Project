@@ -1,11 +1,15 @@
 package com.example.myapplication.view.view
 
+import android.content.BroadcastReceiver
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.myapplication.R
 import com.example.myapplication.data.entity.Film
 import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.receivers.ConnectionChecker
 import com.example.myapplication.view.view.fragments.DetailsFragment
 import com.example.myapplication.view.view.fragments.FavoritesFragment
 import com.example.myapplication.view.view.fragments.HomeFragment
@@ -13,8 +17,10 @@ import com.example.myapplication.view.view.fragments.SelectionsFragment
 import com.example.myapplication.view.view.fragments.SettingsFragment
 import com.example.myapplication.view.view.fragments.WatchLaterFragment
 
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var receiver: BroadcastReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +34,21 @@ class MainActivity : AppCompatActivity() {
             .addToBackStack(null)
             .commit()
 
+        receiver = ConnectionChecker()
+        val filters = IntentFilter().apply {
+            addAction(Intent.ACTION_POWER_CONNECTED)
+            addAction(Intent.ACTION_BATTERY_LOW)
+        }
+        registerReceiver(receiver, filters)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(receiver)
     }
 
     fun launchDetailsFragment(film: Film) {
+
         val bundle = Bundle()
         bundle.putParcelable("film", film)
         val fragment = DetailsFragment()

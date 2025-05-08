@@ -6,6 +6,7 @@ import com.example.myapplication.viewmodel.HomeFragmentViewModel
 import com.example.myapplication.viewmodel.SettingsFragmentViewModel
 import com.example.remote_module.RemoteProvider
 import dagger.Component
+import dagger.Provides
 import javax.inject.Singleton
 
 @Singleton
@@ -18,5 +19,6 @@ import javax.inject.Singleton
 )
 interface AppComponent {
     fun inject(homeFragmentViewModel: HomeFragmentViewModel)
+
     fun inject(settingsFragmentViewModel: SettingsFragmentViewModel)
 }
