@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.data.entity.Film
 import com.example.myapplication.databinding.FragmentDetailsBinding
+import com.example.myapplication.view.view.notifications.NotificationHelper
 import com.example.myapplication.viewmodel.DetailsFragmentViewModel
 import com.example.remote_module.entity.ApiConstants
 import com.google.android.material.snackbar.Snackbar
@@ -66,6 +67,10 @@ class DetailsFragment : Fragment() {
 
         binding.detailsFabDownloadWp.setOnClickListener {
             performAsyncLoadOfPoster()
+        }
+
+        binding.detailsFabWatchLater.setOnClickListener {
+            NotificationHelper.createNotification(requireContext(), film)
         }
     }
 
