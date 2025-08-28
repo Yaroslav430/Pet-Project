@@ -39,6 +39,33 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    flavorDimensions += "version"
+    productFlavors{
+        create("basic"){
+            dimension = "version"
+            applicationIdSuffix = ".basic"
+            versionNameSuffix = "-basic"
+        }
+        create("pro"){
+            dimension = "version"
+            applicationIdSuffix = ".pro"
+            versionNameSuffix = "-pro"
+        }
+
+    }
+    sourceSets {
+        getByName("basic") {
+            java {
+                srcDirs("src\\basic\\java", "src\\basic\\java")
+            }
+        }
+        getByName("pro") {
+            java {
+                srcDirs("src\\pro\\java", "src\\pro\\java")
+            }
+        }
+    }
+
 }
 
 dependencies {
@@ -51,6 +78,7 @@ dependencies {
     implementation (libs.androidx.legacy.support.v4)
     implementation (libs.androidx.fragment.ktx)
     implementation(project(":remote_module"))
+    implementation(libs.androidx.lifecycle.viewmodel.android)
 
     //Tests
     testImplementation (libs.junit)
@@ -73,7 +101,7 @@ dependencies {
     implementation (libs.dagger)
     kapt (libs.dagger.compiler)
 
-            //Room
+    //Room
     implementation (libs.androidx.room.runtime)
     implementation (libs.androidx.room.rxjava3)
     kapt (libs.androidx.room.compiler)

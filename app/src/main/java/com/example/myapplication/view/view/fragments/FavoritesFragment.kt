@@ -1,17 +1,19 @@
 package com.example.myapplication.view.view.fragments
 
+
+import MainActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.data.entity.Film
 import com.example.myapplication.databinding.FragmentFavoritesBinding
 import com.example.myapplication.utils.AnimationHelper
-import com.example.myapplication.view.view.MainActivity
 import com.example.myapplication.view.view.rv_adapters.FilmListRecyclerAdapter
 import com.example.myapplication.view.view.rv_adapters.TopSpacingItemDecoration
+
 
 class FavoritesFragment : Fragment() {
     private lateinit var filmsAdapter: FilmListRecyclerAdapter

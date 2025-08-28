@@ -1,5 +1,3 @@
-package com.example.myapplication.view.view
-
 import android.content.BroadcastReceiver
 import android.content.Intent
 import android.content.IntentFilter
@@ -16,7 +14,6 @@ import com.example.myapplication.view.view.fragments.HomeFragment
 import com.example.myapplication.view.view.fragments.SelectionsFragment
 import com.example.myapplication.view.view.fragments.SettingsFragment
 import com.example.myapplication.view.view.fragments.WatchLaterFragment
-
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

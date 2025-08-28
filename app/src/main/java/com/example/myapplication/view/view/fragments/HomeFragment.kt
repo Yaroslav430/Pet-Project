@@ -1,5 +1,6 @@
 package com.example.myapplication.view.view.fragments
 
+import MainActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +16,6 @@ import com.example.myapplication.databinding.FragmentHomeBinding
 import com.example.myapplication.utils.AnimationHelper
 import com.example.myapplication.utils.AutoDisposable
 import com.example.myapplication.utils.addTo
-import com.example.myapplication.view.view.MainActivity
 import com.example.myapplication.view.view.rv_adapters.FilmListRecyclerAdapter
 import com.example.myapplication.view.view.rv_adapters.TopSpacingItemDecoration
 import com.example.myapplication.viewmodel.HomeFragmentViewModel
