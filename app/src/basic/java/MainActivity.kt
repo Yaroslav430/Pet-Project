@@ -2,18 +2,21 @@ import android.content.BroadcastReceiver
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.myapplication.App
 import com.example.myapplication.R
 import com.example.myapplication.data.entity.Film
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.receivers.ConnectionChecker
 import com.example.myapplication.view.view.fragments.DetailsFragment
-import com.example.myapplication.view.view.fragments.FavoritesFragment
 import com.example.myapplication.view.view.fragments.HomeFragment
-import com.example.myapplication.view.view.fragments.SelectionsFragment
 import com.example.myapplication.view.view.fragments.SettingsFragment
 import com.example.myapplication.view.view.fragments.WatchLaterFragment
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -37,6 +40,35 @@ class MainActivity : AppCompatActivity() {
             addAction(Intent.ACTION_BATTERY_LOW)
         }
         registerReceiver(receiver, filters)
+
+        if (!App.instance.isPromoShown) {
+            val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+            val configSettings = FirebaseRemoteConfigSettings.Builder()
+                .setMinimumFetchIntervalInSeconds(0)
+                .build()
+            firebaseRemoteConfig.setConfigSettingsAsync(configSettings)
+            firebaseRemoteConfig.fetch()
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        firebaseRemoteConfig.activate()
+                        val filmLink = firebaseRemoteConfig.getString("film_link")
+                        if (filmLink.isNotBlank()) {
+                            App.instance.isPromoShown = true
+                            binding.promoViewGroup.apply {
+                                visibility = View.VISIBLE
+                                animate()
+                                    .setDuration(1500)
+                                    .alpha(1f)
+                                    .start()
+                                setLinkForPoster(filmLink)
+                                watchButton.setOnClickListener {
+                                    visibility = View.GONE
+                                }
+                            }
+                        }
+                    }
+                }
+        }
     }
 
     override fun onDestroy() {
@@ -45,7 +77,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun launchDetailsFragment(film: Film) {
-
         val bundle = Bundle()
         bundle.putParcelable("film", film)
         val fragment = DetailsFragment()
@@ -59,6 +90,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initNavigation() {
+        @Suppress("DEPRECATION")
         binding.bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> {
@@ -68,9 +100,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.favorites -> {
-                    val tag = "favorites"
-                    val fragment = checkFragmentExistence(tag)
-                    changeFragment( fragment?: FavoritesFragment(), tag)
+                    Toast.makeText(this, "Доступно в Pro версии", Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.watch_later -> {
@@ -80,9 +110,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.selections -> {
-                    val tag = "selections"
-                    val fragment = checkFragmentExistence(tag)
-                    changeFragment( fragment?: SelectionsFragment(), tag)
+                    Toast.makeText(this, "Доступно в Pro версии", Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.settings -> {
