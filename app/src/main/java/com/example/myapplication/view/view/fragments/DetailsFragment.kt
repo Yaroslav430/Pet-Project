@@ -14,7 +14,6 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.myapplication.R
@@ -26,7 +25,7 @@ import com.example.remote_module.entity.ApiConstants
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*
 
-class DetailsFragment : Fragment() {
+class DetailsFragment : androidx.fragment.app.Fragment() {
     private lateinit var film: Film
     private lateinit var binding: FragmentDetailsBinding
     private val viewModel: DetailsFragmentViewModel by viewModels()
