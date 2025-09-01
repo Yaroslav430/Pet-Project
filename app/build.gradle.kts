@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id ("kotlin-kapt")
     id ("kotlin-parcelize")
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -79,6 +80,7 @@ dependencies {
     implementation (libs.androidx.fragment.ktx)
     implementation(project(":remote_module"))
     implementation(libs.androidx.lifecycle.viewmodel.android)
+    implementation(libs.firebase.config)
 
     //Tests
     testImplementation (libs.junit)
